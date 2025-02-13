@@ -1,8 +1,8 @@
 
 import "./index.css"
-import Navbar from './components/Navbar'
-import HomePage from './components/HomePage/HomePage'
-import Footer from './components/Footer'
+import Navbar from './layout/Navbar'
+import HomePage from './pages/HomePage'
+import Footer from './layout/Footer'
 
 function App() {
 
@@ -14,6 +14,6 @@ function App() {
     <Footer/>
     </>
   )
-}
+} 
 
 export default App
