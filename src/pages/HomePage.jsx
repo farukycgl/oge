@@ -1,15 +1,18 @@
 import React from "react";
-import Hero from "../components/HomePage/Hero";
 import EditorsProductsCard from "../components/HomePage/EditorsProductsCard";
 import BestSellerProductsCard from "../components/HomePage/BestSellerProductsCard";
+import SliderSection from "../components/SliderSection";
+import BottomHero from "../components/HomePage/BottomHero";
 
 const HomePage = () => {
 
     return (
         <>
-            <Hero />
+            <SliderSection />
             <EditorsProductsCard />
             <BestSellerProductsCard/>
+            <SliderSection />
+            <BottomHero />
         </>
     )
 }
