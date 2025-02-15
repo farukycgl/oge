@@ -25,7 +25,7 @@ const SliderSection = () => {
   };
 
   return (
-    <section className="py-6 px-4">
+    <section className="w-full">
       <Slider {...settings}>
         {/* 3 adet resim kullanıyoruz */}
         <div>

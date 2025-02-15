@@ -31,8 +31,8 @@ const products = [
 
 export default function FeaturedProductsCard() {
     return (
-        <div className="pt-15">
-            <div className="flex flex-col items-center justify-center text-center md:text-left space-y-2 md:space-y-0 md:space-x-2 md:items-center">
+        <div className="pt-15 md:pl-10">
+            <div className="flex flex-col items-center justify-center text-center">
                 <h4 className="text-blue-400 font-bold">Pratice Advice</h4>
                 <h1 className="text-3xl font-bold leading-tight md:hidden">
                     Featured <br /> Products

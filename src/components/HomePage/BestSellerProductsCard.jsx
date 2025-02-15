@@ -8,13 +8,13 @@ const BestSellerProductsCard = () => {
 
 
   return (
-    <section className="px-4 py-6 mt-15">
+    <section className="px-4 py-6 pt-15 md:pl-10">
       <div className='flex flex-col items-center text-center'>
         <h2 className="text-xl text-center mb-2 text-[#737373]">Featured Products</h2>
         <h1 className="text-lg text-center mb-4">BESTSELLER PRODUCTS</h1>
         <p className="text-center mb-6 text-gray-500">Problems trying to resolve the conflict between</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 md:pl-10 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
         {data.map((product) => (
           <div key={product.id} className="bg-white shadow-md overflow-hidden flex flex-col">
             <img src={product.image} alt={product.title} className="w-full h-64 object-cover" />
