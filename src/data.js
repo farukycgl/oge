@@ -69,7 +69,7 @@ const products = [
         oldPrice: '$15.00',
         newPrice: '$6.48',
         colors: ['blue', 'green', 'brown', 'red'],
-        image: 'https://picsum.photos/200/300.jpg'
+        image: 'https://picsum.photos/seed/picsum/200/300'
       }
   ];
 

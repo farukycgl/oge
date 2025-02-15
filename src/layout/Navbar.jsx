@@ -72,7 +72,7 @@ const Navbar = () => {
 
                         {/* Mobile Menu Toggle */}
                         <button className="block md:hidden p-2" onClick={toggleMenu}>
-                            {isMenuOpen ? <X className="w-6 h-6 text-gray-600" /> : <Menu className="w-6 h-6 text-gray-600" />}
+                            {isMenuOpen ? <X className="w-6 h-6 text-gray-600" /> : <Menu className="w-6 h-6 text-gray-600 cursor-pointer" />}
                         </button>
                     </div>
 

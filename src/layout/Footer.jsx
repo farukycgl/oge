@@ -1,12 +1,13 @@
 import React from "react";
 import { Instagram, Facebook, Twitter } from 'lucide-react';
+import Button from "../components/Button";
 
 
 const Footer = () => {
 
     return (
-        <div className="flex flex-col pl-10 pt-15 ">
-            <div className="flex flex-col gap-4 bg-[#FAFAFA] md:flex md:flex-row justify-between md:pr-20 md:items-center">
+        <div className="flex flex-col">
+            <div className="flex flex-col gap-4 pl-10 pt-15 pb-15 md:flex md:flex-row justify-between md:pr-20 md:items-center bg-[#FAFAFA]">
                 <div>
                     <h1>Bandage</h1>
                 </div>
@@ -17,7 +18,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <section className="flex flex-col gap-5 mt-20 md:flex md:flex-row md:gap-10 md:justify-between md:mr-20 md:items-center">
+            <section className="flex flex-col gap-5 pl-10 pt-20 md:flex md:flex-row md:gap-10 md:justify-between md:mr-20 md:items-center">
                 <div className="flex flex-col gap-1.5">
                     <h3>Company Info</h3>
                     <a href="">About Us</a>
@@ -48,8 +49,10 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-1.5">
                     <h3>Get In Touch</h3>
-                    <input type="text" placeholder="Your Email" />
-                    <button className="bg-blue-400 text-white">Subscribe</button>
+                    <div>
+                        <input type="text" placeholder="Your Email" />
+                        <Button className="bg-blue-400 text-white">Subscribe</Button>
+                    </div>
                     <p>please enter your e-mail address!</p>
                 </div>
             </section>
