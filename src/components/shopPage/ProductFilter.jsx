@@ -5,7 +5,7 @@ const ProductFilter = () => {
     const [view, setView] = useState('grid');
 
     return (
-        <div className="w-full max-w-7xl flex flex-col items-center md:flex-row md:items-center md:justify-between pt-15 pl-10 pr-10 gap-5">
+        <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between pt-15 pl-10 pr-10 gap-5">
 
             <div className="text-gray-600">Showing all 12 results</div>
 
