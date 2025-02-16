@@ -1,9 +1,9 @@
 import React from "react";
-import EditorsProductsCard from "../components/HomePage/EditorsProductsCard";
-import BestSellerProductsCard from "../components/HomePage/BestSellerProductsCard";
+import EditorsProductsCard from "../components/homePage/EditorsProductsCard";
+import BestSellerProductsCard from "../components/homePage/BestSellerProductsCard";
 import SliderSection from "../components/SliderSection";
-import BottomHero from "../components/HomePage/BottomHero";
-import FeaturedProductsCard from "../components/HomePage/FeaturedProductsCard";
+import BottomHero from "../components/homePage/BottomHero";
+import FeaturedProductsCard from "../components/homePage/FeaturedProductsCard";
 
 
 const HomePage = () => {

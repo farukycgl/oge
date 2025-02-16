@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, Search, ShoppingCart, User, X, Instagram, Facebook, Twitter, Youtube, Phone, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,12 +42,12 @@ const Navbar = () => {
 
                     {/* Desktop Navigation Links */}
                     <div className="hidden md:flex flex-col md:flex-row items-center space-x-6">
-                        <a href="#" className="text-gray-600 hover:text-gray-900">Home</a>
-                        <a href="#" className="text-gray-600 hover:text-gray-900">Shop</a>
-                        <a href="#" className="text-gray-600 hover:text-gray-900">About</a>
-                        <a href="#" className="text-gray-600 hover:text-gray-900">Blog</a>
-                        <a href="#" className="text-gray-600 hover:text-gray-900">Contact</a>
-                        <a href="#" className="text-gray-600 hover:text-gray-900">Pages</a>
+                        <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
+                        <Link to="/shop" className="text-gray-600 hover:text-gray-900">Shop</Link>
+                        <Link to="#" className="text-gray-600 hover:text-gray-900">About</Link>
+                        <Link to="#" className="text-gray-600 hover:text-gray-900">Blog</Link>
+                        <Link to="#" className="text-gray-600 hover:text-gray-900">Contact</Link>
+                        <Link to="#" className="text-gray-600 hover:text-gray-900">Pages</Link>
                     </div>
 
                     {/* Mobile Nav Links */}
@@ -79,10 +80,11 @@ const Navbar = () => {
                     {/* Mobile Menu */}
                     {isMenuOpen && (
                         <div className="mt-4 space-y-2 block md:hidden">
-                            <a href="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Home</a>
-                            <a href="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</a>
-                            <a href="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</a>
-                            <a href="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</a>
+                            <Link to="/" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Home</Link>
+                            <Link to="/shop" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Shop</Link>
+                            <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
+                            <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</Link>
+                            <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</Link>
                         </div>
                     )}
             </nav>
