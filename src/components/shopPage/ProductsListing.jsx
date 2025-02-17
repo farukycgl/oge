@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Link } from 'lucide-react';
 
 const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,6 +42,7 @@ const ProductsListing = () => {
     <div className="flex flex-col mx-auto pt-15 pl-10 pr-10 ">
       <div className="flex flex-col space-y-6">
         {/* Product Cards */}
+        
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {currentItems.map((product) => (
             <div key={product.id} className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm">
