@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Link } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
-  const maxRows = 3; // En fazla 3 satır
 
   const products = [
     {
@@ -16,7 +16,6 @@ const ProductsListing = () => {
       salePrice: "$6.48",
       colors: ["#23A6F0", "#2DC071", "#E77C40", "#252B42"]
     },
-    // 11 more identical products to make 12 total
     ...[...Array(11)].map((_, index) => ({
       id: index + 2,
       image: "https://picsum.photos/seed/picsum/400/500",
@@ -42,35 +41,36 @@ const ProductsListing = () => {
     <div className="flex flex-col mx-auto pt-15 pl-10 pr-10 ">
       <div className="flex flex-col space-y-6">
         {/* Product Cards */}
-        
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {currentItems.map((product) => (
-            <div key={product.id} className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm">
-              <div className="relative aspect-[3/4]">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-4 flex flex-col items-center text-center">
-                <h3 className="text-lg font-medium text-gray-800">{product.title}</h3>
-                <p className="text-sm text-gray-500 mt-1">{product.department}</p>
-                <div className="flex items-center mt-2 space-x-2">
-                  <span className="text-gray-400 line-through">{product.originalPrice}</span>
-                  <span className="text-blue-600 font-medium">{product.salePrice}</span>
+            <Link key={product.id} to={`/product/${product.id}`}>
+              <div className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+                <div className="relative aspect-[3/4]">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="flex space-x-2 mt-3">
-                  {product.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
+                <div className="p-4 flex flex-col items-center text-center">
+                  <h3 className="text-lg font-medium text-gray-800">{product.title}</h3>
+                  <p className="text-sm text-gray-500 mt-1">{product.department}</p>
+                  <div className="flex items-center mt-2 space-x-2">
+                    <span className="text-gray-400 line-through">{product.originalPrice}</span>
+                    <span className="text-blue-600 font-medium">{product.salePrice}</span>
+                  </div>
+                  <div className="flex space-x-2 mt-3">
+                    {product.colors.map((color, index) => (
+                      <div
+                        key={index}
+                        className="w-4 h-4 rounded-full"
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
