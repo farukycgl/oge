@@ -114,7 +114,7 @@ const SignupForm = () => {
               </label>
               <input
                 id="password"
-                type="password"
+                type="text"
                 {...register("password", {
                   required: true,
                   minLength: 8,
@@ -136,7 +136,7 @@ const SignupForm = () => {
               </label>
               <input
                 id="confirmPassword"
-                type="password"
+                type="text"
                 {...register("confirmPassword", {
                   validate: (value) => value === watch("password") || "Passwords do not match",
                 })}
@@ -211,7 +211,7 @@ const SignupForm = () => {
                   </label>
                   <input
                     id="store_tax_no"
-                    type="text"
+                    type="password"
                     {...register("store_tax_no", {
                       required: true,
                       pattern: /^T\d{3}V\d{6}$/,
@@ -229,7 +229,7 @@ const SignupForm = () => {
                   </label>
                   <input
                     id="store_bank_account"
-                    type="text"
+                    type="password"
                     {...register("store_bank_account", {
                       required: true,
                       pattern: /^TR\d{2}[0-9A-Z]{5}[0-9A-Z]{17}$/,
