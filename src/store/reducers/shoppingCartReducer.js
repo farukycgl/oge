@@ -19,6 +19,6 @@ const initialState = {
     }
   }
   
-  export default shoppingCartReducer
+  export default shoppingCartReducer;
   
   

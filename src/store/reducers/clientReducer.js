@@ -24,6 +24,6 @@ const initialState = {
     }
   }
   
-  export default clientReducer
+  export default clientReducer;
   
   
