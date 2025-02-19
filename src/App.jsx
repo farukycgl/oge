@@ -17,8 +17,8 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/" exact ><HomePage/></Route>
+        <Route path="/shop/product"><ProductDetailPage/></Route>
         <Route path="/shop"><ShopPage/></Route>
-        <Route path="/product"><ProductDetailPage/></Route>
         <Route path="/signup"><SignupPage/></Route>
       </Switch>
       <Footer />

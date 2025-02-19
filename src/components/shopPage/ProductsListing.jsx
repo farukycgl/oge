@@ -43,7 +43,7 @@ const ProductsListing = () => {
         {/* Product Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {currentItems.map((product) => (
-            <Link key={product.id} to={`/product/${product.id}`}>
+            <Link key={product.id} to={`/shop/product/${product.id}`}>
               <div className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow">
                 <div className="relative aspect-[3/4]">
                   <img

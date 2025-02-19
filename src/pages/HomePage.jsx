@@ -1,5 +1,5 @@
 import React from "react";
-import EditorsProductsCard from "../components/homePage/EditorsProductsCard";
+
 import BestSellerProductsCard from "../components/homePage/BestSellerProductsCard";
 import SliderSection from "../components/SliderSection";
 import BottomHero from "../components/homePage/BottomHero";
@@ -11,7 +11,7 @@ const HomePage = () => {
     return (
         <>
             <SliderSection />
-            <EditorsProductsCard />
+
             <BestSellerProductsCard/>
             <SliderSection />
             <BottomHero />
