@@ -39,7 +39,7 @@ const Navbar = () => {
                     <div className="text-2xl font-bold text-gray-800">
                         Bandage
                     </div>
-
+      
                     {/* Desktop Navigation Links */}
                     <div className="hidden md:flex flex-col md:flex-row items-center space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
