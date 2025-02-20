@@ -41,17 +41,15 @@ export const setLanguage = (language) => ({
   payload: language,
 })
 
-// Thunk action creator to get roles
+// Thunk Action - Roles için
 export const fetchRoles = () => async (dispatch, getState) => {
   const {
     client
   } = getState()
   if (client.roles.length === 0) {
     try {
-      // Replace this with your actual API call
-      const response = await fetch("/api/roles")
-      const roles = await response.json()
-      dispatch(setRoles(roles))
+      const response = await axiosInstance.get("/roles")
+      dispatch(setRoles(response.data))
     } catch (error) {
       console.error("Failed to fetch roles:", error)
     }
@@ -59,29 +57,35 @@ export const fetchRoles = () => async (dispatch, getState) => {
 }
 
 
-// Thunk Action Login için 
+// Thunk Action - Login için 
 export const loginUser =
-  (credentials, rememberMe, navigate, from = "/") =>
+  (credentials, rememberMe, history, from = "/") =>
   async (dispatch) => {
     try {
-      const response = await axiosInstance.post("/login", credentials)
-      const userData = response.data
+      console.log("Giriş yapılıyor...");
+      const response = await axiosInstance.post("/login", credentials);
+
+      const userData = response.data;
 
       // Add Gravatar URL to user data
-      const emailHash = md5(credentials.email.toLowerCase().trim())
-      userData.avatarUrl = `https://www.gravatar.com/avatar/${emailHash}?d=identicon`
+      const emailHash = md5(credentials.email.toLowerCase().trim());
+      userData.avatarUrl = `https://www.gravatar.com/avatar/${emailHash}?d=identicon`;
 
       // Save token if remember me is checked
       if (rememberMe) {
-        localStorage.setItem("token", userData.token)
+        localStorage.setItem("token", userData.token);
       }
 
-      dispatch(loginSuccess(userData))
-      toast.success("Successfully logged in!")
-      navigate(from)
+      console.log("Dispatching loginSuccess with userData:", userData);
+      dispatch(loginSuccess(userData));
+      
+      toast.success("Successfully logged in!");
+      history.push(from);
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Login failed. Please try again."
-      dispatch(loginFailure(errorMessage))
-      toast.error(errorMessage)
+      console.error("Login error:", error);
+      const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+      console.log("Dispatching loginFailure with error:", errorMessage);
+      dispatch(loginFailure(errorMessage));
+      toast.error(errorMessage);
     }
-  }
+  };

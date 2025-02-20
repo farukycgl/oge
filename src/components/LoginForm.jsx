@@ -1,24 +1,32 @@
-import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
-import { useHistory } from "react-router-dom"
-import { loginUser } from "../store/actions/clientActions"
+import React, { useEffect } from 'react';
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { loginUser } from "../store/actions/clientActions";
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, error } = useSelector(state => state.client);
+
+  useEffect(() => {
+    if (user && Object.keys(user).length > 0) {
+      history.push('/');
+    }
+  }, [user, history]);
 
   const onSubmit = (data) => {
-    dispatch(loginUser({ email: data.email, password: data.password }, data.rememberMe, history))
-  }
+    dispatch(loginUser({ email: data.email, password: data.password }, data.rememberMe, history));
+  };
 
   return (
-    <div className="max-w-md  mx-auto mt-15 mb-15 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-md mx-auto mt-15 mb-15 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
@@ -74,7 +82,7 @@ export default function LoginForm() {
           Login
         </button>
       </form>
+      {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
     </div>
-  )
+  );
 }
-
