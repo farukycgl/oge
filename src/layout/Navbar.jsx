@@ -61,32 +61,34 @@ const Navbar = () => {
                         <button className="p-2 hover:bg-gray-100 rounded-full">
                             <ShoppingCart className="w-5 h-5 text-gray-600" />
                         </button>
-                        </div>
-
-                        {/* Icons */}
-                        <div className="hidden md:flex items-center gap-4">
-                            <Link to="/signup" className="text-blue-500">Login / Register</Link>
-                            <Search className="w-5 h-5 text-blue-500 cursor-pointer" />
-                            <ShoppingCart className="w-5 h-5 text-blue-500 cursor-pointer" />
-                            <User className="w-5 h-5 text-blue-500 cursor-pointer" />
-                        </div>
-
-                        {/* Mobile Menu Toggle */}
-                        <button className="block md:hidden p-2" onClick={toggleMenu}>
-                            {isMenuOpen ? <X className="w-6 h-6 text-gray-600" /> : <Menu className="w-6 h-6 text-gray-600 cursor-pointer" />}
-                        </button>
                     </div>
 
-                    {/* Mobile Menu */}
-                    {isMenuOpen && (
-                        <div className="mt-4 space-y-2 block md:hidden">
-                            <Link to="/" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Home</Link>
-                            <Link to="/shop" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Shop</Link>
-                            <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
-                            <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</Link>
-                            <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</Link>
-                        </div>
-                    )}
+                    {/* Icons */}
+                    <div className="hidden md:flex items-center gap-4">
+                        <Link to="/login" className="text-blue-500">Login</Link>
+                        <span>/</span>
+                        <Link to="/signup" className="text-blue-500">Register</Link>
+                        <Search className="w-5 h-5 text-blue-500 cursor-pointer" />
+                        <ShoppingCart className="w-5 h-5 text-blue-500 cursor-pointer" />
+                        <User className="w-5 h-5 text-blue-500 cursor-pointer" />
+                    </div>
+
+                    {/* Mobile Menu Toggle */}
+                    <button className="block md:hidden p-2" onClick={toggleMenu}>
+                        {isMenuOpen ? <X className="w-6 h-6 text-gray-600" /> : <Menu className="w-6 h-6 text-gray-600 cursor-pointer" />}
+                    </button>
+                </div>
+
+                {/* Mobile Menu */}
+                {isMenuOpen && (
+                    <div className="mt-4 space-y-2 block md:hidden">
+                        <Link to="/" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Home</Link>
+                        <Link to="/shop" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Shop</Link>
+                        <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
+                        <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</Link>
+                        <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</Link>
+                    </div>
+                )}
             </nav>
         </div>
     );
