@@ -4,7 +4,8 @@ import {
   SET_THEME,
   SET_LANGUAGE,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  LOGOUT
 } from "../actions/clientActions"
 
 const initialState = {
@@ -43,6 +44,10 @@ const clientReducer = (state = initialState, action) => {
       return {
         ...state, user: null, error: action.payload
       }
+    case LOGOUT:
+      return {
+        ...state, user: null, error: null
+      }  
     default:
       return state
   }

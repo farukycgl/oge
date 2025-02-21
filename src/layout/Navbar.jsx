@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, Search, ShoppingCart, User, X, Instagram, Facebook, Twitter, Youtube, Phone, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../store/actions/clientActions';
+
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,6 +11,16 @@ const Navbar = () => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    // logout işlemi için
+    const user = useSelector((state) => state.client.user)
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const handleLogout = () => {
+        dispatch(logoutUser())
+        history.push("/")
+    }
 
     return (
         <div className="w-full">
@@ -39,7 +52,7 @@ const Navbar = () => {
                     <div className="text-2xl font-bold text-gray-800">
                         Bandage
                     </div>
-      
+
                     {/* Desktop Navigation Links */}
                     <div className="hidden md:flex flex-col md:flex-row items-center space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
@@ -63,14 +76,28 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    {/* Icons */}
+
+                    {/* Icons and User Profile */}
                     <div className="hidden md:flex items-center gap-4">
-                        <Link to="/login" className="text-blue-500">Login</Link>
-                        <span>/</span>
-                        <Link to="/signup" className="text-blue-500">Register</Link>
+                        {user ? (
+                            <>
+                                <img src={user.avatarUrl || "/placeholder.svg"} alt={user.name} className="w-8 h-8 rounded-full" />
+                                <span className="text-gray-600">{user.name}</span>
+                                <button onClick={handleLogout} className="text-blue-500 hover:text-blue-700">
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className="text-blue-500">Login</Link>
+                                <span>/</span>
+                                <Link to="/signup" className="text-blue-500">Register</Link>
+                            </>
+                        )}
+
                         <Search className="w-5 h-5 text-blue-500 cursor-pointer" />
                         <ShoppingCart className="w-5 h-5 text-blue-500 cursor-pointer" />
-                        <User className="w-5 h-5 text-blue-500 cursor-pointer" />
+                        {!user && <User className="w-5 h-5 text-blue-500 cursor-pointer" />}
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -87,6 +114,28 @@ const Navbar = () => {
                         <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
                         <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</Link>
                         <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</Link>
+
+                        {/* Mobile login user profile */}
+                        {user ? (
+                            <>
+                                <div className="py-2 px-4 text-gray-600">{user.name}</div>
+                                <button
+                                    onClick={handleLogout}
+                                    className="block w-full text-left py-2 px-4 text-blue-500 hover:bg-gray-100 rounded"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className="block py-2 px-4 text-blue-500 hover:bg-gray-100 rounded">
+                                    Login
+                                </Link>
+                                <Link to="/signup" className="block py-2 px-4 text-blue-500 hover:bg-gray-100 rounded">
+                                    Register
+                                </Link>
+                            </>
+                        )}
                     </div>
                 )}
             </nav>

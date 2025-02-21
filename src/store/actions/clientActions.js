@@ -6,9 +6,11 @@ export const SET_USER = "SET_USER";
 export const SET_ROLES = "SET_ROLES";
 export const SET_THEME = "SET_THEME";
 export const SET_LANGUAGE = "SET_LANGUAGE";
-// Action Types
+// Login Actions
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGIN_FAILURE = "LOGIN_FAILURE"
+// Logout Actions
+export const LOGOUT = "LOGOUT";
 
 // Action Creators
 export const loginSuccess = (userData) => ({
@@ -79,7 +81,7 @@ export const loginUser =
       console.log("Dispatching loginSuccess with userData:", userData);
       dispatch(loginSuccess(userData));
       
-      toast.success("Successfully logged in!");
+      toast.success("Griş başarılı :)");
       history.push(from);
     } catch (error) {
       console.error("Login error:", error);
@@ -89,3 +91,10 @@ export const loginUser =
       toast.error(errorMessage);
     }
   };
+
+// Thunk Action - Logout için
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("token");
+  dispatch({ type: LOGOUT });
+  toast.success("Çıkış yapıldı!");
+};
