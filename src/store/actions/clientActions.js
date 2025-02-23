@@ -81,7 +81,7 @@ export const loginUser =
       console.log("Dispatching loginSuccess with userData:", userData);
       dispatch(loginSuccess(userData));
       
-      toast.success("Griş başarılı :)");
+      toast.success("Giriş başarılı :)");
       history.push(from);
     } catch (error) {
       console.error("Login error:", error);
@@ -96,5 +96,5 @@ export const loginUser =
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch({ type: LOGOUT });
-  toast.success("Çıkış yapıldı!");
+  toast.success("Çıkış yapıldı !");
 };

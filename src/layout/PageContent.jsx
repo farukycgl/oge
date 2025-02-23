@@ -1,9 +1,11 @@
 import React from 'react'
 
-const PageContent = () => {
+const PageContent = ({ children }) => {
   return (
-    <div>PageContent</div>
+    <div>
+      <main>{children}</main>
+    </div>
   )
-}
+};
 
 export default PageContent;
