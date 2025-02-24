@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage"
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify"
 import Layout from "./layout/Layout"
+import ContactPage from "./pages/ContactPage"
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" exact ><HomePage /></Route>
           <Route path="/shop/product"><ProductDetailPage /></Route>
           <Route path="/shop"><ShopPage /></Route>
+          <Route path="/contact"><ContactPage /></Route>
           <Route path="/login"><LoginPage /></Route>
           <Route path="/signup"><SignupPage /></Route>
         </Switch>
