@@ -43,7 +43,7 @@ const Description = () => {
                     </div>
                   </div>
                   <img 
-                    src="/room-design.jpg" 
+                    src="https://picsum.photos/536/354" 
                     alt="Modern Room Design" 
                     className="w-full h-full object-cover"
                   />

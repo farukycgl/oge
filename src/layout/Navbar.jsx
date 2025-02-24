@@ -57,7 +57,7 @@ const Navbar = () => {
                     <div className="hidden md:flex flex-col md:flex-row items-center space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
                         <Link to="/shop" className="text-gray-600 hover:text-gray-900">Shop</Link>
-                        <Link to="#" className="text-gray-600 hover:text-gray-900">About</Link>
+                        <Link to="/about" className="text-gray-600 hover:text-gray-900">About</Link>
                         <Link to="#" className="text-gray-600 hover:text-gray-900">Blog</Link>
                         <Link to="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
                         <Link to="#" className="text-gray-600 hover:text-gray-900">Pages</Link>
@@ -111,9 +111,10 @@ const Navbar = () => {
                     <div className="mt-4 space-y-2 block md:hidden">
                         <Link to="/" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Home</Link>
                         <Link to="/shop" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Shop</Link>
-                        <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
+                        <Link to="/product" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
                         <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</Link>
                         <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</Link>
+                        <Link to="/about" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">About</Link>
 
                         {/* Mobile login user profile */}
                         {user ? (

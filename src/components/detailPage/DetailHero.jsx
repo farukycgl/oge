@@ -13,7 +13,7 @@ const DetailHero = () => {
   const colors = ['bg-blue-400', 'bg-green-400', 'bg-orange-400', 'bg-navy-800'];
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-4">
+    <div className="max-w-4xl mx-auto bg-white p-4 mt-15">
       <div className="md:flex md:gap-6">
         
         {/* Left Side: Main Image Carousel + Thumbnails */}

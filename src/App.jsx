@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify"
 import Layout from "./layout/Layout"
 import ContactPage from "./pages/ContactPage"
+import AboutPage from "./pages/AboutPage"
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/shop/product"><ProductDetailPage /></Route>
           <Route path="/shop"><ShopPage /></Route>
           <Route path="/contact"><ContactPage /></Route>
+          <Route path="/about"><AboutPage /></Route>
           <Route path="/login"><LoginPage /></Route>
           <Route path="/signup"><SignupPage /></Route>
         </Switch>
