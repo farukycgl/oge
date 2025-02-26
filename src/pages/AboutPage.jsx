@@ -7,7 +7,7 @@ import BottomSection from '../components/aboutPage/BottomSection'
 
 const AboutPage = () => {
   return (
-    <div>
+    <div className=''>
       <AboutUs />
       <Team />
       <BrandsHeader />
