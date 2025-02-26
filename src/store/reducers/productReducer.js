@@ -1,14 +1,14 @@
 import { SET_CATEGORIES, SET_PRODUCT_LIST, SET_TOTAL, SET_FETCH_STATE, SET_LIMIT, SET_OFFSET, SET_FILTER } from "../actions/productActions"
 
 const initialState = {
-    categories: [],
-    productList: [],
-    total: 0,
-    limit: 25,
-    offset: 0,
-    filter: "",
-    fetchState: "NOT_FETCHED",
-  }
+  categories: [],
+  productList: [],
+  total: 0,
+  fetchState: "idle", // idle, loading, success, error
+  limit: 12,
+  offset: 0,
+  filter: {}
+};
   
   const productReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -1,3 +1,5 @@
+import axiosInstance from "../../api/axios";
+
 export const SET_CATEGORIES = "SET_CATEGORIES";
 export const SET_PRODUCT_LIST = "SET_PRODUCT_LIST";
 export const SET_TOTAL = "SET_TOTAL";
@@ -42,4 +44,23 @@ export const setCategories = (categories) => ({
     payload: filter,
   })
   
+// Thunk action to fetch products
+export const fetchProducts = () => async (dispatch) => {
+  // Set fetch state to loading
+  dispatch(setFetchState("loading"));
   
+  try {
+    const response = await axiosInstance.get('/products');
+    
+    // Set products and total in the store
+    dispatch(setProductList(response.data.products));
+    dispatch(setTotal(response.data.total));
+    
+    // Set fetch state to success
+    dispatch(setFetchState("success"));
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    // Set fetch state to error
+    dispatch(setFetchState("error"));
+  }
+};

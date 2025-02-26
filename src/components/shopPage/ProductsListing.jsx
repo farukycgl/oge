@@ -1,41 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../store/actions/productActions';
+// Update this path to match your project structure
 
 const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  const dispatch = useDispatch();
+  
+  // Get products and loading state from Redux store
+  const { productList, fetchState, total } = useSelector(state => state.product);
+  
+  useEffect(() => {
+    // Fetch products when component mounts
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  const products = [
-    {
-      id: 1,
-      image: "https://picsum.photos/id/237/400/500",
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      colors: ["#23A6F0", "#2DC071", "#E77C40", "#252B42"]
-    },
-    ...[...Array(11)].map((_, index) => ({
-      id: index + 2,
-      image: "https://picsum.photos/seed/picsum/400/500",
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      colors: ["#23A6F0", "#2DC071", "#E77C40", "#252B42"]
-    }))
-  ];
-
-  // Pagination hesaplamaları
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  // Pagination calculations
+  const totalPages = Math.ceil((productList?.length || 0) / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = productList?.slice(indexOfFirstItem, indexOfLastItem) || [];
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  // Show loading state
+  if (fetchState === 'loading') {
+    return <div className="flex justify-center items-center h-64">Loading products...</div>;
+  }
+
+  // Show error state
+  if (fetchState === 'error') {
+    return <div className="flex justify-center items-center h-64">Error loading products. Please try again later.</div>;
+  }
 
   return (
     <div className="flex flex-col mx-auto pt-15 pl-10 pr-10 ">
@@ -47,20 +48,21 @@ const ProductsListing = () => {
               <div className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow">
                 <div className="relative aspect-[3/4]">
                   <img
-                    src={product.image}
-                    alt={product.title}
+                    src={product.images && product.images.length > 0 ? product.images[0].url : "https://picsum.photos/seed/picsum/400/500"}
+                    alt={product.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="p-4 flex flex-col items-center text-center">
-                  <h3 className="text-lg font-medium text-gray-800">{product.title}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{product.department}</p>
+                  <h3 className="text-lg font-medium text-gray-800">{product.name}</h3>
+                  <p className="text-sm text-gray-500 mt-1">{product.description?.substring(0, 30) || "Product"}</p>
                   <div className="flex items-center mt-2 space-x-2">
-                    <span className="text-gray-400 line-through">{product.originalPrice}</span>
-                    <span className="text-blue-600 font-medium">{product.salePrice}</span>
+                    <span className="text-gray-400 line-through">${(product.price * 1.2).toFixed(2)}</span>
+                    <span className="text-blue-600 font-medium">${product.price.toFixed(2)}</span>
                   </div>
                   <div className="flex space-x-2 mt-3">
-                    {product.colors.map((color, index) => (
+                    {/* Since API doesn't provide colors, we'll use default colors */}
+                    {["#23A6F0", "#2DC071", "#E77C40", "#252B42"].map((color, index) => (
                       <div
                         key={index}
                         className="w-4 h-4 rounded-full"
@@ -113,7 +115,7 @@ const ProductsListing = () => {
             disabled={currentPage === totalPages}
             className="px-3 py-1 border rounded text-sm disabled:opacity-50"
           >
-            Next
+            Last
           </button>
         </div>
       </div>
