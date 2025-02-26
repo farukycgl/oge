@@ -9,14 +9,14 @@ import FeaturedProductsCard from "../components/homePage/FeaturedProductsCard";
 const HomePage = () => {
 
     return (
-        <>
+        <div className="overflow-x-hidden">
             <SliderSection />
             <EditorsProductsCard />
             <BestSellerProductsCard/>
             <SliderSection />
             <BottomHero />
             <FeaturedProductsCard />
-        </>
+        </div>
     )
 }
 
