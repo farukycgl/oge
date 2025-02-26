@@ -1,26 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Search, ShoppingCart, User, X, Instagram, Facebook, Twitter, Youtube, Phone, Mail } from 'lucide-react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../store/actions/clientActions';
-
+import { fetchCategories } from '../store/actions/categoryActions';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const handleMouseEnter = () => setIsDropdownOpen(true);
+    const handleMouseLeave = () => setIsDropdownOpen(false);
+
+    // Shop'a tıklayınca genel shop sayfasına yönlendirme
+    const handleShopClick = () => {
+        history.push('/shop');
+        setIsDropdownOpen(false); // Açılır menüyü kapat
     };
 
-    // logout işlemi için
-    const user = useSelector((state) => state.client.user)
-    const dispatch = useDispatch()
-    const history = useHistory()
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const user = useSelector((state) => state.client.user);
+    const { categories } = useSelector((state) => state.categories);
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
 
     const handleLogout = () => {
-        dispatch(logoutUser())
-        history.push("/")
-    }
+        dispatch(logoutUser());
+        history.push("/");
+    };
+
+    const kadınKategoriler = categories.filter(cat => cat.gender === "k");
+    const erkekKategoriler = categories.filter(cat => cat.gender === "e");
 
     return (
         <div className="w-full">
@@ -56,26 +71,53 @@ const Navbar = () => {
                     {/* Desktop Navigation Links */}
                     <div className="hidden md:flex flex-col md:flex-row items-center space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
-                        <Link to="/shop" className="text-gray-600 hover:text-gray-900">Shop</Link>
+
+                        {/* Shop Açılır Menü */}
+                        <div
+                            className="relative"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <span className="text-gray-600 hover:text-gray-900 cursor-pointer"
+                                onClick={handleShopClick}>
+                                Shop ▼
+                            </span>
+                            {isDropdownOpen && (
+                                <div className="absolute left-0 bg-white shadow-lg p-4 w-64 z-50">
+                                    <div className="flex justify-between">
+                                        <div>
+                                            <h3 className="font-bold">Kadın</h3>
+                                            {kadınKategoriler.map(category => (
+                                                <Link key={category.id} to={`/shop/kadin/${category.title}/${category.id}`} className="block">
+                                                    {category.title}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold">Erkek</h3>
+                                            {erkekKategoriler.map(category => (
+                                                <Link key={category.id} to={`/shop/erkek/${category.title}/${category.id}`} className="block">
+                                                    {category.title}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         <Link to="/about" className="text-gray-600 hover:text-gray-900">About</Link>
                         <Link to="#" className="text-gray-600 hover:text-gray-900">Blog</Link>
                         <Link to="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
                         <Link to="#" className="text-gray-600 hover:text-gray-900">Pages</Link>
                     </div>
 
-                    {/* Mobile Nav Links */}
+                    {/* Mobile Icons */}
                     <div className="flex items-center justify-end gap-4 md:hidden">
-                        <button className="p-2 hover:bg-gray-100 rounded-full">
-                            <User className="w-5 h-5 text-gray-600" />
-                        </button>
-                        <button className="p-2 hover:bg-gray-100 rounded-full">
-                            <Search className="w-5 h-5 text-gray-600" />
-                        </button>
-                        <button className="p-2 hover:bg-gray-100 rounded-full">
-                            <ShoppingCart className="w-5 h-5 text-gray-600" />
-                        </button>
+                        <User className="w-5 h-5 text-gray-600" />
+                        <Search className="w-5 h-5 text-gray-600" />
+                        <ShoppingCart className="w-5 h-5 text-gray-600" />
                     </div>
-
 
                     {/* Icons and User Profile */}
                     <div className="hidden md:flex items-center gap-4">
@@ -94,7 +136,6 @@ const Navbar = () => {
                                 <Link to="/signup" className="text-blue-500">Register</Link>
                             </>
                         )}
-
                         <Search className="w-5 h-5 text-blue-500 cursor-pointer" />
                         <ShoppingCart className="w-5 h-5 text-blue-500 cursor-pointer" />
                         {!user && <User className="w-5 h-5 text-blue-500 cursor-pointer" />}
@@ -111,12 +152,8 @@ const Navbar = () => {
                     <div className="mt-4 space-y-2 block md:hidden">
                         <Link to="/" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Home</Link>
                         <Link to="/shop" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Shop</Link>
-                        <Link to="/product" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Product</Link>
-                        <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Pricing</Link>
-                        <Link to="#" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">Contact</Link>
                         <Link to="/about" className="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded">About</Link>
 
-                        {/* Mobile login user profile */}
                         {user ? (
                             <>
                                 <div className="py-2 px-4 text-gray-600">{user.name}</div>
@@ -129,12 +166,8 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="block py-2 px-4 text-blue-500 hover:bg-gray-100 rounded">
-                                    Login
-                                </Link>
-                                <Link to="/signup" className="block py-2 px-4 text-blue-500 hover:bg-gray-100 rounded">
-                                    Register
-                                </Link>
+                                <Link to="/login" className="block py-2 px-4 text-blue-500 hover:bg-gray-100 rounded">Login</Link>
+                                <Link to="/signup" className="block py-2 px-4 text-blue-500 hover:bg-gray-100 rounded">Register</Link>
                             </>
                         )}
                     </div>
@@ -145,5 +178,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
