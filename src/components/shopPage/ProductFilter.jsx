@@ -17,7 +17,7 @@ const ProductFilter = () => {
             ...(sortValue && { sort: sortValue }),
             ...(filterText && { filter: filterText })
         };
-        
+
         dispatch(fetchProducts(filterParams));
     };
 
@@ -43,30 +43,32 @@ const ProductFilter = () => {
             </div>
 
             <div className='flex flex-row justify-between gap-3'>
-                {/* Sıralama için açılır menü */}
-                <select 
-                    className="border rounded px-4 py-2 bg-white text-gray-600"
-                    value={sortValue}
-                    onChange={(e) => setSortValue(e.target.value)}
-                >
-                    <option value="">Popularity</option>
-                    <option value="price:asc">Price: Low to High</option>
-                    <option value="price:desc">Price: High to Low</option>
-                    <option value="rating:asc">Rating: Low to High</option>
-                    <option value="rating:desc">Rating: High to Low</option>
-                </select>
-
-                {/* Arama input'u */}
-                <input
-                    type="text"
-                    placeholder="Search products..."
-                    className="border rounded px-4 py-2"
-                    value={filterText}
-                    onChange={(e) => setFilterText(e.target.value)}
-                />
+                <div className='flex flex-col gap-3'>
+                    {/* Sıralama için açılır menü */}
+                    <select
+                        className="border rounded px-4 py-2 bg-white text-gray-600"
+                        value={sortValue}
+                        onChange={(e) => setSortValue(e.target.value)}
+                    >
+                        <option value="">Popularity</option>
+                        <option value="price:asc">Price: Low to High</option>
+                        <option value="price:desc">Price: High to Low</option>
+                        <option value="rating:asc">Rating: Low to High</option>
+                        <option value="rating:desc">Rating: High to Low</option>
+                    </select>
+             
+                    {/* Arama input'u */}
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        className="border rounded px-4 py-2"
+                        value={filterText}
+                        onChange={(e) => setFilterText(e.target.value)}
+                    />
+                </div>
 
                 {/* Filter Button */}
-                <button 
+                <button
                     className="bg-blue-500 text-white rounded px-6 py-2"
                     onClick={handleFilterSubmit}
                 >

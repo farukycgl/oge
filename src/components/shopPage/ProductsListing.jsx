@@ -4,6 +4,78 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/actions/productActions';
 
+// Pagination fonksiyonu
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  const getPageNumbers = () => {
+    const pages = [];
+    
+    if (totalPages <= 5) {
+      // 5 veya daha az sayfa varsa hepsini göster
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Her zaman ilk sayfayı göster
+      pages.push(1);
+      
+      if (currentPage > 3) {
+        pages.push('...');
+      }
+      
+      // Aktif sayfanın etrafındaki sayfaları göster
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(currentPage + 1, totalPages - 1); i++) {
+        pages.push(i);
+      }
+      
+      if (currentPage < totalPages - 2) {
+        pages.push('...');
+      }
+      
+      // Her zaman son sayfayı göster
+      pages.push(totalPages);
+    }
+    
+    return pages;
+  };
+
+  return (
+    <div className="flex justify-center items-center gap-1 mt-8">
+      <button
+        onClick={() => onPageChange(1)}
+        disabled={currentPage === 1}
+        className="px-4 py-2 border rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+      >
+        First
+      </button>
+      
+      {getPageNumbers().map((page, index) => (
+        <button
+          key={index}
+          onClick={() => typeof page === 'number' ? onPageChange(page) : null}
+          disabled={page === '...'}
+          className={`px-4 py-2 rounded-lg text-sm font-medium ${
+            currentPage === page
+              ? 'bg-blue-500 text-white'
+              : page === '...'
+              ? 'text-gray-500'
+              : 'text-gray-500 hover:bg-gray-50 border'
+          }`}
+        >
+          {page}
+        </button>
+      ))}
+      
+      <button
+        onClick={() => onPageChange(totalPages)}
+        disabled={currentPage === totalPages}
+        className="px-4 py-2 border rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
+  );
+};
+
 const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 24; // Sayfa başına ürün sayısı
@@ -91,55 +163,12 @@ const ProductsListing = () => {
           ))}
         </div>
 
-        {/* Pagination */}
-        <div className="flex justify-center items-center gap-2 mt-8">
-          <button
-            onClick={() => handlePageChange(1)}
-            disabled={currentPage === 1}
-            className={`px-4 py-2 border rounded ${
-              currentPage === 1 ? 'text-gray-400' : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            First
-          </button>
-          
-          <button
-            onClick={() => handlePageChange(1)}
-            className={`px-4 py-2 border rounded ${
-              currentPage === 1 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            1
-          </button>
-          
-          <button
-            onClick={() => handlePageChange(2)}
-            className={`px-4 py-2 border rounded ${
-              currentPage === 2 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            2
-          </button>
-          
-          <button
-            onClick={() => handlePageChange(3)}
-            className={`px-4 py-2 border rounded ${
-              currentPage === 3 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            3
-          </button>
-          
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`px-4 py-2 border rounded ${
-              currentPage === totalPages ? 'text-gray-400' : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            Next
-          </button>
-        </div>
+        {/* Pagination bileşenini kullan */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
