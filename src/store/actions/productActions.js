@@ -48,8 +48,11 @@ export const fetchProducts = (params = {}) => {
     return async dispatch => {
         dispatch(setFetchState("loading"));
         try {
-            // URL parametrelerini oluştur
             const queryParams = new URLSearchParams();
+            // Pagination parametreleri
+            queryParams.append('limit', params.limit || 24);
+            queryParams.append('offset', params.offset || 0);
+            // Diğer filtreler
             if (params.category) queryParams.append('category', params.category);
             if (params.sort) queryParams.append('sort', params.sort);
             if (params.filter) queryParams.append('filter', params.filter);

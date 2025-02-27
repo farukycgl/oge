@@ -6,7 +6,7 @@ import { fetchProducts } from '../../store/actions/productActions';
 
 const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const limit = 24; // Sayfa başına ürün sayısı
   const dispatch = useDispatch();
   
   // URL'den parametreleri al
@@ -15,22 +15,26 @@ const ProductsListing = () => {
   const { productList, fetchState, total } = useSelector(state => state.product);
   
   useEffect(() => {
-    // categoryId değiştiğinde veya sayfa ilk yüklendiğinde ürünleri getir
-    if (categoryId) {
-      dispatch(fetchProducts({ category: categoryId }));
-    } else {
-      dispatch(fetchProducts());
-    }
-  }, [dispatch, categoryId]); // categoryId'yi dependency array'e ekledik
+    const offset = (currentPage - 1) * limit;
+    const params = {
+      limit,
+      offset,
+      ...(categoryId && { category: categoryId })
+    };
+    
+    dispatch(fetchProducts(params));
+  }, [dispatch, categoryId, currentPage, limit]);
 
-  // Pagination calculations
-  const totalPages = Math.ceil((productList?.length || 0) / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = productList?.slice(indexOfFirstItem, indexOfLastItem) || [];
+  // Toplam sayfa sayısını hesapla
+  const totalPages = Math.ceil(total / limit);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    // Sayfa değiştiğinde en üste kaydır
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Yumuşak geçiş için
+    });
   };
 
   // Show loading state
@@ -55,7 +59,7 @@ const ProductsListing = () => {
       <div className="flex flex-col space-y-6">
         {/* Product Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {currentItems.map((product) => (
+          {productList.map((product) => (
             <Link key={product.id} to={`/shop/product/${product.id}`}>
               <div className="flex flex-col bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative aspect-[3/4]">
@@ -65,23 +69,21 @@ const ProductsListing = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-800 mb-2">{product.name}</h3>
-                  <p className="text-sm text-gray-600 mb-2">{product.description?.substring(0, 30) || "Product"}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-400 line-through text-sm">${(product.price * 1.2).toFixed(2)}</span>
-                      <span className="text-blue-600 font-medium">${product.price.toFixed(2)}</span>
-                    </div>
-                    <div className="flex gap-1">
-                      {["#23A6F0", "#2DC071", "#E77C40", "#252B42"].map((color, index) => (
-                        <div
-                          key={index}
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: color }}
-                        />
-                      ))}
-                    </div>
+                <div className="p-4 flex flex-col items-center text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{product.name}</h3>
+                  <div className="text-gray-500 text-base mb-3">{product.description}</div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-gray-400 text-lg line-through">${(product.price * 1.2).toFixed(2)}</span>
+                    <span className="text-green-500 text-lg font-semibold">${product.price.toFixed(2)}</span>
+                  </div>
+                  <div className="flex gap-3">
+                    {["#23A6F0", "#2DC071", "#E77C40", "#252B42"].map((color, index) => (
+                      <div
+                        key={index}
+                        className="w-4 h-4 rounded-full"
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -90,29 +92,50 @@ const ProductsListing = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center items-center space-x-2 mt-8">
+        <div className="flex justify-center items-center gap-2 mt-8">
           <button
-            onClick={() => handlePageChange(currentPage - 1)}
+            onClick={() => handlePageChange(1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded text-sm disabled:opacity-50"
+            className={`px-4 py-2 border rounded ${
+              currentPage === 1 ? 'text-gray-400' : 'text-gray-600 hover:bg-gray-50'
+            }`}
           >
-            Previous
+            First
           </button>
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              className={`px-3 py-1 border rounded text-sm ${
-                currentPage === index + 1 ? 'bg-blue-500 text-white' : ''
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
+          
+          <button
+            onClick={() => handlePageChange(1)}
+            className={`px-4 py-2 border rounded ${
+              currentPage === 1 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            1
+          </button>
+          
+          <button
+            onClick={() => handlePageChange(2)}
+            className={`px-4 py-2 border rounded ${
+              currentPage === 2 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            2
+          </button>
+          
+          <button
+            onClick={() => handlePageChange(3)}
+            className={`px-4 py-2 border rounded ${
+              currentPage === 3 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            3
+          </button>
+          
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 border rounded text-sm disabled:opacity-50"
+            className={`px-4 py-2 border rounded ${
+              currentPage === totalPages ? 'text-gray-400' : 'text-gray-600 hover:bg-gray-50'
+            }`}
           >
             Next
           </button>
