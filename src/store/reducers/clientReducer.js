@@ -9,7 +9,7 @@ import {
 } from "../actions/clientActions"
 
 const initialState = {
-  user: {},
+  user: JSON.parse(localStorage.getItem('user')) || null,
   addressList: [],
   creditCards: [],
   roles: [],
@@ -37,6 +37,7 @@ const clientReducer = (state = initialState, action) => {
         ...state, language: action.payload
       }
     case LOGIN_SUCCESS:
+      localStorage.setItem('user', JSON.stringify(action.payload));
       return {
         ...state, user: action.payload, error: null
       }
@@ -45,6 +46,7 @@ const clientReducer = (state = initialState, action) => {
         ...state, user: null, error: action.payload
       }
     case LOGOUT:
+      localStorage.removeItem('user');
       return {
         ...state, user: null, error: null
       }  

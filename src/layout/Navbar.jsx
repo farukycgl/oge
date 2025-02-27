@@ -23,6 +23,7 @@ const Navbar = () => {
     const history = useHistory();
 
     const user = useSelector((state) => state.client.user);
+    console.log('Current user:', user); // Debugging için
     const { categories } = useSelector((state) => state.categories);
 
     useEffect(() => {

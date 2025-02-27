@@ -83,6 +83,7 @@ export const loginUser =
       
       toast.success("Giriş başarılı :)");
       history.push(from);
+      localStorage.setItem('user', JSON.stringify(userData));
     } catch (error) {
       console.error("Login error:", error);
       const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
@@ -93,8 +94,10 @@ export const loginUser =
   };
 
 // Thunk Action - Logout için
-export const logoutUser = () => (dispatch) => {
-  localStorage.removeItem("token");
-  dispatch({ type: LOGOUT });
-  toast.success("Çıkış yapıldı !");
+export const logoutUser = () => {
+  return (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch({ type: 'LOGOUT' });
+    toast.success("Çıkış yapıldı !");
+  };
 };

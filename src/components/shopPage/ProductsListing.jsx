@@ -15,6 +15,7 @@ const ProductsListing = () => {
   
   useEffect(() => {
     // Fetch products when component mounts
+    console.log("Product List in State:", productList);
     dispatch(fetchProducts());
   }, [dispatch]);
 
@@ -48,7 +49,7 @@ const ProductsListing = () => {
               <div className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow">
                 <div className="relative aspect-[3/4]">
                   <img
-                    src={product.images && product.images.length > 0 ? product.images[0].url : "https://picsum.photos/seed/picsum/400/500"}
+                    src={product.images[0].url}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />

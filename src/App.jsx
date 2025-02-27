@@ -34,6 +34,6 @@ function App() {
       </Layout>
     </Router>
   )
-}
+} 
 
 export default App
