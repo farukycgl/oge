@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/actions/productActions';
-// Update this path to match your project structure
 
 const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 12;
   const dispatch = useDispatch();
+  const { categoryId } = useParams();
   
   // Get products and loading state from Redux store
   const { productList, fetchState, total } = useSelector(state => state.product);
   
   useEffect(() => {
-    // Fetch products when component mounts
-    console.log("Product List in State:", productList);
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    // Fetch products when component mounts or categoryId changes
+    dispatch(fetchProducts({ category: categoryId }));
+  }, [dispatch, categoryId]);
 
   // Pagination calculations
   const totalPages = Math.ceil((productList?.length || 0) / itemsPerPage);
@@ -40,13 +39,13 @@ const ProductsListing = () => {
   }
 
   return (
-    <div className="flex flex-col mx-auto pt-15 pl-10 pr-10 ">
+    <div className="flex flex-col mx-auto pt-15 pl-10 pr-10">
       <div className="flex flex-col space-y-6">
         {/* Product Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {currentItems.map((product) => (
             <Link key={product.id} to={`/shop/product/${product.id}`}>
-              <div className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+              <div className="flex flex-col bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative aspect-[3/4]">
                   <img
                     src={product.images[0].url}
@@ -54,22 +53,24 @@ const ProductsListing = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-4 flex flex-col items-center text-center">
-                  <h3 className="text-lg font-medium text-gray-800">{product.name}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{product.description?.substring(0, 30) || "Product"}</p>
-                  <div className="flex items-center mt-2 space-x-2">
-                    <span className="text-gray-400 line-through">${(product.price * 1.2).toFixed(2)}</span>
-                    <span className="text-blue-600 font-medium">${product.price.toFixed(2)}</span>
-                  </div>
-                  <div className="flex space-x-2 mt-3">
-                    {/* Since API doesn't provide colors, we'll use default colors */}
-                    {["#23A6F0", "#2DC071", "#E77C40", "#252B42"].map((color, index) => (
-                      <div
-                        key={index}
-                        className="w-4 h-4 rounded-full"
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
+                <div className="p-4">
+                  <div className="text-gray-500 text-sm mb-1">English Department</div>
+                  <h3 className="font-bold text-gray-800 mb-2">{product.name}</h3>
+                  <p className="text-sm text-gray-600 mb-2">{product.description?.substring(0, 30) || "Product"}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-400 line-through text-sm">${(product.price * 1.2).toFixed(2)}</span>
+                      <span className="text-blue-600 font-medium">${product.price.toFixed(2)}</span>
+                    </div>
+                    <div className="flex gap-1">
+                      {["#23A6F0", "#2DC071", "#E77C40", "#252B42"].map((color, index) => (
+                        <div
+                          key={index}
+                          className="w-3 h-3 rounded-full"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -78,20 +79,13 @@ const ProductsListing = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center items-center space-x-2">
-          <button
-            onClick={() => handlePageChange(1)}
-            disabled={currentPage === 1}
-            className="px-3 py-1 border rounded text-sm disabled:opacity-50"
-          >
-            First
-          </button>
+        <div className="flex justify-center items-center space-x-2 mt-8">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-1 border rounded disabled:opacity-50"
+            className="px-3 py-1 border rounded text-sm disabled:opacity-50"
           >
-            <ChevronLeft size={16} />
+            Previous
           </button>
           {[...Array(totalPages)].map((_, index) => (
             <button
@@ -107,16 +101,9 @@ const ProductsListing = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-1 border rounded disabled:opacity-50"
-          >
-            <ChevronRight size={16} />
-          </button>
-          <button
-            onClick={() => handlePageChange(totalPages)}
-            disabled={currentPage === totalPages}
             className="px-3 py-1 border rounded text-sm disabled:opacity-50"
           >
-            Last
+            Next
           </button>
         </div>
       </div>

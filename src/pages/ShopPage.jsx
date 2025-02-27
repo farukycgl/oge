@@ -6,6 +6,7 @@ import Brands from '../components/shopPage/Brands';
 
 const ShopPage = () => {
 
+
   return (
     <div>
         <ProductCollection />
