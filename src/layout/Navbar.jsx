@@ -16,7 +16,16 @@ const Navbar = () => {
     // Shop'a tıklayınca genel shop sayfasına yönlendirme
     const handleShopClick = () => {
         history.push('/shop');
-        setIsDropdownOpen(false); // Açılır menüyü kapat
+        setIsDropdownOpen(false);
+    };
+
+    // Kategori linkine tıklandığında
+    const handleCategoryClick = (gender, category) => {
+        // gender: "k" veya "e"
+        // URL'i oluştur: /shop/kadin/tisort/2 veya /shop/erkek/pantolon/5 gibi
+        const genderText = gender === "k" ? "kadin" : "erkek";
+        history.push(`/shop/${genderText}/${category.title}/${category.id}`);
+        setIsDropdownOpen(false);
     };
 
     const dispatch = useDispatch();
@@ -79,8 +88,10 @@ const Navbar = () => {
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
                         >
-                            <span className="text-gray-600 hover:text-gray-900 cursor-pointer"
-                                onClick={handleShopClick}>
+                            <span 
+                                className="text-gray-600 hover:text-gray-900 cursor-pointer"
+                                onClick={handleShopClick}
+                            >
                                 Shop ▼
                             </span>
                             {isDropdownOpen && (
@@ -89,17 +100,25 @@ const Navbar = () => {
                                         <div>
                                             <h3 className="font-bold">Kadın</h3>
                                             {kadınKategoriler.map(category => (
-                                                <Link key={category.id} to={`/shop/kadin/${category.title}/${category.id}`} className="block">
+                                                <div
+                                                    key={category.id}
+                                                    onClick={() => handleCategoryClick("k", category)}
+                                                    className="block cursor-pointer hover:text-blue-500"
+                                                >
                                                     {category.title}
-                                                </Link>
+                                                </div>
                                             ))}
                                         </div>
                                         <div>
                                             <h3 className="font-bold">Erkek</h3>
                                             {erkekKategoriler.map(category => (
-                                                <Link key={category.id} to={`/shop/erkek/${category.title}/${category.id}`} className="block">
+                                                <div
+                                                    key={category.id}
+                                                    onClick={() => handleCategoryClick("e", category)}
+                                                    className="block cursor-pointer hover:text-blue-500"
+                                                >
                                                     {category.title}
-                                                </Link>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>

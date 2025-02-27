@@ -8,15 +8,20 @@ const ProductsListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   const dispatch = useDispatch();
-  const { categoryId } = useParams();
   
-  // Get products and loading state from Redux store
+  // URL'den parametreleri al
+  const { gender, categoryName, categoryId } = useParams();
+  
   const { productList, fetchState, total } = useSelector(state => state.product);
   
   useEffect(() => {
-    // Fetch products when component mounts or categoryId changes
-    dispatch(fetchProducts({ category: categoryId }));
-  }, [dispatch, categoryId]);
+    // categoryId değiştiğinde veya sayfa ilk yüklendiğinde ürünleri getir
+    if (categoryId) {
+      dispatch(fetchProducts({ category: categoryId }));
+    } else {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, categoryId]); // categoryId'yi dependency array'e ekledik
 
   // Pagination calculations
   const totalPages = Math.ceil((productList?.length || 0) / itemsPerPage);
@@ -40,6 +45,13 @@ const ProductsListing = () => {
 
   return (
     <div className="flex flex-col mx-auto pt-15 pl-10 pr-10">
+      {/* Kategori başlığını göster */}
+      {categoryName && (
+        <h2 className="text-2xl font-bold mb-6 capitalize">
+          {gender} - {categoryName}
+        </h2>
+      )}
+      
       <div className="flex flex-col space-y-6">
         {/* Product Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -54,7 +66,6 @@ const ProductsListing = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <div className="text-gray-500 text-sm mb-1">English Department</div>
                   <h3 className="font-bold text-gray-800 mb-2">{product.name}</h3>
                   <p className="text-sm text-gray-600 mb-2">{product.description?.substring(0, 30) || "Product"}</p>
                   <div className="flex items-center justify-between">

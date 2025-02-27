@@ -1,4 +1,3 @@
-
 import "./index.css"
 import Navbar from './layout/Navbar'
 import HomePage from './pages/HomePage'
@@ -25,6 +24,7 @@ function App() {
         <Switch>
           <Route path="/" exact ><HomePage /></Route>
           <Route path="/shop/product"><ProductDetailPage /></Route>
+          <Route path="/shop/:gender/:categoryName/:categoryId"><ShopPage/></Route>
           <Route path="/shop"><ShopPage /></Route>
           <Route path="/contact"><ContactPage /></Route>
           <Route path="/about"><AboutPage /></Route>
@@ -34,6 +34,6 @@ function App() {
       </Layout>
     </Router>
   )
-} 
+}
 
 export default App

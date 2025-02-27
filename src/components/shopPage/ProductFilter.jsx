@@ -49,17 +49,17 @@ const ProductFilter = () => {
                     value={sortValue}
                     onChange={(e) => setSortValue(e.target.value)}
                 >
-                    <option value="">Sıralama Seçin</option>
-                    <option value="price:asc">Fiyat: Düşükten Yükseğe</option>
-                    <option value="price:desc">Fiyat: Yüksekten Düşüğe</option>
-                    <option value="rating:asc">Puan: Düşükten Yükseğe</option>
-                    <option value="rating:desc">Puan: Yüksekten Düşüğe</option>
+                    <option value="">Popularity</option>
+                    <option value="price:asc">Price: Low to High</option>
+                    <option value="price:desc">Price: High to Low</option>
+                    <option value="rating:asc">Rating: Low to High</option>
+                    <option value="rating:desc">Rating: High to Low</option>
                 </select>
 
                 {/* Arama input'u */}
                 <input
                     type="text"
-                    placeholder="Ürün ara..."
+                    placeholder="Search products..."
                     className="border rounded px-4 py-2"
                     value={filterText}
                     onChange={(e) => setFilterText(e.target.value)}
