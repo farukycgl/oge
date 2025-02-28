@@ -38,7 +38,7 @@ const DetailHero = () => {
 
           {/* Sağ taraf - Ürün Detayları */}
           <div className="w-full md:w-1/2 flex flex-col gap-4 md:justify-center">
-            <h1 className="text-2xl font-normal text-gray-800">{selectedProduct.name}</h1>
+            <h4 className="text-xl font-bold text-gray-800">{selectedProduct.name}</h4>
             
             {/* Yıldızlar ve değerlendirme */}
             <div className="flex items-center gap-2">

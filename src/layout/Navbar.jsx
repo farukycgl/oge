@@ -75,7 +75,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <div className="text-2xl font-bold text-gray-800">
-                        Bandage
+                        <Link to="/" className="hover:text-black text-black">Bandage</Link>  
                     </div>
 
                     {/* Desktop Navigation Links */}
@@ -97,8 +97,8 @@ const Navbar = () => {
                             {isDropdownOpen && (
                                 <div className="absolute left-0 bg-white shadow-lg p-4 w-64 z-50">
                                     <div className="flex justify-between">
-                                        <div>
-                                            <h3 className="font-bold">Kadın</h3>
+                                        <div className='flex flex-col gap-3'>
+                                            <h3 className="font-bold pb-5">Kadın</h3>
                                             {kadınKategoriler.map(category => (
                                                 <div
                                                     key={category.id}
@@ -109,8 +109,8 @@ const Navbar = () => {
                                                 </div>
                                             ))}
                                         </div>
-                                        <div>
-                                            <h3 className="font-bold">Erkek</h3>
+                                        <div className='flex flex-col gap-3'>
+                                            <h3 className="font-bold pb-5">Erkek</h3>
                                             {erkekKategoriler.map(category => (
                                                 <div
                                                     key={category.id}
