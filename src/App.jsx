@@ -22,9 +22,9 @@ function App() {
       <ToastContainer position="top-right" autoClose={3000} newestOnTop />
       <Layout>
         <Switch>
-          <Route path="/" exact ><HomePage /></Route>
-          <Route path="/shop/product"><ProductDetailPage /></Route>
-          <Route path="/shop/:gender/:categoryName/:categoryId"><ShopPage/></Route>
+          <Route path="/" exact><HomePage /></Route>
+          <Route path="/shop/product/:productId"><ProductDetailPage /></Route>
+          <Route path="/shop/:gender/:categoryName/:categoryId"><ShopPage /></Route>
           <Route path="/shop"><ShopPage /></Route>
           <Route path="/contact"><ContactPage /></Route>
           <Route path="/about"><AboutPage /></Route>

@@ -12,8 +12,12 @@ const BottomHero = () => {
           <p>We know how large objects will act, but things on a small scale.</p>
         </div>
         <div className='flex flex-col items-center gap-5 pt-5 md:flex-row'>
-          <button className="w-full h-12 px-6 py-3 text-white bg-blue-500 rounded-lg">BUY NOW</button>
-          <button className="w-full h-12 px-6 py-3 text-blue-500 bg-white rounded-lg border-[1px] border-blue-500">Learn More</button>
+          <button className="w-[200px] h-12 bg-blue-500 text-white rounded-lg">
+            BUY NOW
+          </button>
+          <button className="w-[200px] h-12 text-blue-500 bg-white rounded-lg border border-blue-500">
+            Learn More
+          </button>
         </div>
       </div>
       <div className='pt-5'>

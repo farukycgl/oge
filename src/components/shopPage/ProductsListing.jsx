@@ -132,7 +132,11 @@ const ProductsListing = () => {
         {/* Product Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {productList.map((product) => (
-            <Link key={product.id} to={`/shop/product/${product.id}`}>
+            <Link 
+              key={product.id} 
+              to={`/shop/product/${product.id}`}
+              className="transform hover:scale-105 transition-transform duration-200 cursor-pointer"
+            >
               <div className="flex flex-col bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative aspect-[3/4]">
                   <img

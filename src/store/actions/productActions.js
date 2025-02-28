@@ -7,6 +7,8 @@ export const SET_FETCH_STATE = "SET_FETCH_STATE";
 export const SET_LIMIT = "SET_LIMIT";
 export const SET_OFFSET = "SET_OFFSET";
 export const SET_FILTER = "SET_FILTER";
+export const SET_SELECTED_PRODUCT = "SET_SELECTED_PRODUCT";
+export const SET_PRODUCT_LOADING = "SET_PRODUCT_LOADING";
 
 export const setCategories = (categories) => ({
     type: SET_CATEGORIES,
@@ -43,6 +45,16 @@ export const setFilter = (filter) => ({
     payload: filter,
 })
   
+export const setSelectedProduct = (product) => ({
+    type: SET_SELECTED_PRODUCT,
+    payload: product,
+});
+
+export const setProductLoading = (isLoading) => ({
+    type: SET_PRODUCT_LOADING,
+    payload: isLoading,
+});
+
 // Thunk action to fetch products
 export const fetchProducts = (params = {}) => {
     return async dispatch => {
@@ -65,6 +77,21 @@ export const fetchProducts = (params = {}) => {
         } catch (error) {
             console.error("Error fetching products:", error);
             dispatch(setFetchState("error"));
+        }
+    };
+};
+
+// Tekil ürün getirme için thunk action
+export const fetchProductById = (productId) => {
+    return async dispatch => {
+        dispatch(setProductLoading(true));
+        try {
+            const response = await axiosInstance.get(`/products/${productId}`);
+            dispatch(setSelectedProduct(response.data));
+        } catch (error) {
+            console.error("Error fetching product:", error);
+        } finally {
+            dispatch(setProductLoading(false));
         }
     };
 };
