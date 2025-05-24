@@ -141,7 +141,8 @@ const Navbar = () => {
 
                         {/* Icons */}
                         <div className="hidden md:flex items-center gap-4">
-                            <Link to="/signup" className="text-blue-500">Login / Register</Link>
+                            <Link to="/signup" className="text-blue-500">Register</Link>
+                            <Link to="/login" className="text-blue-500">Login</Link>
                             <Search className="w-5 h-5 text-blue-500 cursor-pointer" />
                             <ShoppingCart className="w-5 h-5 text-blue-500 cursor-pointer" />
                             <User className="w-5 h-5 text-blue-500 cursor-pointer" />

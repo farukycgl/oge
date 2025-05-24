@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import ShopPage from "./pages/ShopPage"
 import ProductDetailPage from "./pages/ProductDetailPage"
 import SignupPage from "./pages/SignupPage"
-
 import LoginPage from "./pages/LoginPage"
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify"

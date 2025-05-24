@@ -1,88 +1,79 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import axiosInstance from "../api/axios";
 import { useHistory } from "react-router-dom";
-import { loginUser } from "../store/actions/clientActions";
 
-export default function LoginForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const LoginForm = () => {
 
-  const dispatch = useDispatch();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [error, setError] = useState(null);
   const history = useHistory();
-  const { user, error } = useSelector(state => state.client);
 
-  useEffect(() => {
-    if (user && Object.keys(user).length > 0) {
-      history.push('/');
+  const onSubmit = async (data) => {
+    try {
+      const response = await axiosInstance.post("/login", {
+        email: data.email,
+        password: data.password,
+      });
+
+      // Giriş başarılı olduysa token vs. alırsın:
+      const userData = response.data;
+      localStorage.setItem("user", JSON.stringify(userData)); // veya sadece token
+
+      // Giriş sonrası yönlendirme
+      history.push("/"); // veya anasayfa
+
+    } catch (error) {
+      setError("Invalid email or password");
     }
-  }, [user, history]);
-
-  const onSubmit = (data) => {
-    dispatch(loginUser({ email: data.email, password: data.password }, data.rememberMe, history));
   };
 
   return (
-    <div className="max-w-md mx-auto mt-15 mb-15 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-2">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
-              },
-            })}
-          />
-          {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            {...register("password", {
-              required: "Password is required",
-            })}
-          />
-          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            id="rememberMe"
-            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            {...register("rememberMe")}
-          />
-          <label htmlFor="rememberMe" className="text-sm text-gray-700">
-            Remember me
-          </label>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Login
-        </button>
-      </form>
-      {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Login</h2>
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        <form 
+        onSubmit={handleSubmit(onSubmit)} 
+        className="space-y-5">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              {...register("email", { required: true })}
+              id="email"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="example@mail.com"
+              required
+            />
+            {errors.email && <span className="text-red-500 text-xs">Email is required</span>}
+          </div>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input
+              type="password"
+              {...register("password", { required: true })}
+              id="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
+              required
+            />
+            {errors.password && <span className="text-red-500 text-xs">Password is required</span>}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+          >
+            Login
+          </button>
+        </form>
+        <p className="text-sm text-gray-600 mt-4 text-center">
+          Don't have an account? <a href="#" className="text-blue-600 hover:underline">Sign up</a>
+        </p>
+      </div>
     </div>
   );
-}
+};
+
+export default LoginForm;
